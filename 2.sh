@@ -8,3 +8,4 @@ if [ "$2" == "$IP" ]; then
 	echo IP SOVPADAET
 else echo IP NE SOVPADAET
 fi
+#test
