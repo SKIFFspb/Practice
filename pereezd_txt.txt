@@ -1,0 +1,88 @@
+
+3736  ?
+4691 -100
+
+
+iptables -t nat -A POSTROUTING -j SNAT --to-source 85.25.214.105 -o em1
+
+
+
+
+
+service mysql stop
+apt remove --purge mysql-server mysql-client mysql-common -y
+apt autoremove -y
+sudo apt autoclean -y
+
+
+#UpGr
+apt update
+apt upgrade -y
+#postfix
+debconf-set-selections <<< "postfix postfix/mailname string your.hostname.com"
+debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Internet Site'"
+apt-get install -y postfix
+
+#php5.6 
+apt-get install software-properties-common
+add-apt-repository ppa:ondrej/php -y
+apt-get update
+apt install -y php5.6
+apt-get install -y libapache2-mod-php5.6 php5.6-cgi php5.6-cli php5.6-common php5.6-curl php5.6-gd php5.6-mcrypt php5.6-memcache php5.6-mysql php5.6-redis
+
+#apache Уже включен
+apt install apache2 -y
+#nginx
+apt install nginx -y
+
+#percona-server-server-5.7
+
+
+wget https://downloads.percona.com/downloads/Percona-Server-5.5/Percona-Server-5.5.62-38.14/binary/debian/bionic/x86_64/Percona-Server-5.5.62-38.14-r7e0e1cc-bionic-x86_64-bundle.tar
+#2 https://downloads.percona.com/downloads/Percona-Server-5.5/Percona-Server-5.5.62-38.14/binary/debian/bionic/x86_64/percona-server-server-5.5_5.5.62-rel38.14-1.bionic_amd64.deb
+
+#tar xvf Percona-Server-5.5.62-38.14-r7e0e1cc-bionic-x86_64-bundle.tar
+#dpkg -i *.deb
+
+#apt --fix-broken install
+
+#3
+
+echo "percona-server-server-5.5 percona-server-server/root_password password 321" | sudo debconf-set-selections
+echo "percona-server-server-5.5 percona-server-server/root_password_again password 321" | sudo debconf-set-selections
+dpkg -i *.deb
+apt-get install -f -y
+
+
+
+
+
+#apt install percona-server-server-5.7 -y
+
+#redis
+apt install redis-server -y
+#zabbix-agent
+apt install zabbix-agent -y
+#tmux уже есть
+apt install tmux -y
+#opendkim
+apt install opendkim opendkim-tools -y
+#proftpd
+apt install proftpd -y
+#sshd
+#apt install openssh-server
+#systemctl enable sshd
+#sphinxsearch
+apt install sphinxsearch -y
+
+echo 'deb http://apt.newrelic.com/debian/ newrelic non-free' | sudo tee /etc/apt/sources.list.d/newrelic.list
+wget -O- https://download.newrelic.com/548C16BF.gpg | sudo apt-key add -
+sudo apt-get update
+
+
+echo newrelic-php5 newrelic-php5/application-name string "My App Name" | debconf-set-selections
+echo newrelic-php5 newrelic-php5/license-key string "YOUR_LICENSE_KEY" | debconf-set-selections
+sudo apt-get install newrelic-php5 -y
+
+
+apt install dh-php -y
