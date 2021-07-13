@@ -15,19 +15,26 @@ apt-get install -y libapache2-mod-php5.6 php5.6-cgi php5.6-cli php5.6-common php
 
 #apache Уже включен
 apt install apache2 -y
+
+service apdche2 stop
+
+
+
 #nginx
 apt install nginx -y
 
+
+
 #percona-server-server-5.7
+apt-get install gnupg2 -y
+wget https://repo.percona.com/apt/percona-release_latest.focal_all.deb
+dpkg -i percona-release_latest.focal_all.deb
+percona-release setup ps80
+echo "percona-server-server   percona-server-server/re-root-pass password" | sudo debconf-set-selections
+echo "percona-server-server   percona-server-server/root-pass password" | sudo debconf-set-selections
+echo "percona-server-server   percona-server-server/default-auth-override select  Use Strong Password Encryption (RECOMMENDED)" | sudo debconf-set-selections
+apt install percona-server-server -y
 
-
-wget https://downloads.percona.com/downloads/Percona-Server-5.5/Percona-Server-5.5.62-38.14/binary/debian/bionic/x86_64/Percona-Server-5.5.62-38.14-r7e0e1cc-bionic-x86_64-bundle.tar
-tar xvf Percona-Server-5.5.62-38.14-r7e0e1cc-bionic-x86_64-bundle.tar
-echo "percona-server-server-5.5 percona-server-server/root_password password 321" | sudo debconf-set-selections
-echo "percona-server-server-5.5 percona-server-server/root_password_again password 321" | sudo debconf-set-selections
-dpkg -i *.deb
-#apt --fix-broken install
-apt-get install -f -y
 
 
 #redis
