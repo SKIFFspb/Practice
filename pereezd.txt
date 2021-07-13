@@ -1,6 +1,7 @@
 #UpGr
-apt update
+apt update -y
 apt upgrade -y
+
 #postfix
 debconf-set-selections <<< "postfix postfix/mailname string your.hostname.com"
 debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Internet Site'"
@@ -12,20 +13,19 @@ add-apt-repository ppa:ondrej/php -y
 apt-get update
 apt install -y php5.6
 apt-get install -y libapache2-mod-php5.6 php5.6-cgi php5.6-cli php5.6-common php5.6-curl php5.6-gd php5.6-mcrypt php5.6-memcache php5.6-mysql php5.6-redis
+apt install dh-php -y
 
-#apache Уже включен
+#apache
 apt install apache2 -y
-
-service apdche2 stop
-
-
+#service apdche2 stop
+cp /etc/apache2/ports.conf /etc/apache2/ports_old.conf
+sed 's/Listen 80/Listen 127.0.0.1:81/' /etc/apache2/ports_old.conf >/etc/apache2/ports.conf
+service apache2 start
 
 #nginx
 apt install nginx -y
 
-
-
-#percona-server-server-5.7
+#percona-server-server-8
 apt-get install gnupg2 -y
 wget https://repo.percona.com/apt/percona-release_latest.focal_all.deb
 dpkg -i percona-release_latest.focal_all.deb
@@ -35,18 +35,21 @@ echo "percona-server-server   percona-server-server/root-pass password" | sudo d
 echo "percona-server-server   percona-server-server/default-auth-override select  Use Strong Password Encryption (RECOMMENDED)" | sudo debconf-set-selections
 apt install percona-server-server -y
 
-
-
 #redis
 apt install redis-server -y
+
 #zabbix-agent
 apt install zabbix-agent -y
+
 #tmux уже есть
-apt install tmux -y
+#apt install tmux -y
+
 #opendkim
 apt install opendkim opendkim-tools -y
+
 #proftpd
 apt install proftpd -y
+
 #sshd
 #apt install openssh-server
 #systemctl enable sshd
@@ -63,4 +66,3 @@ echo newrelic-php5 newrelic-php5/license-key string "YOUR_LICENSE_KEY" | debconf
 sudo apt-get install newrelic-php5 -y
 
 
-apt install dh-php -y
