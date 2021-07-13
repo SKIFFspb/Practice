@@ -1,20 +1,3 @@
-
-3736  ?
-4691 -100
-
-
-iptables -t nat -A POSTROUTING -j SNAT --to-source 85.25.214.105 -o em1
-
-
-
-
-
-service mysql stop
-apt remove --purge mysql-server mysql-client mysql-common -y
-apt autoremove -y
-sudo apt autoclean -y
-
-
 #UpGr
 apt update
 apt upgrade -y
@@ -39,25 +22,12 @@ apt install nginx -y
 
 
 wget https://downloads.percona.com/downloads/Percona-Server-5.5/Percona-Server-5.5.62-38.14/binary/debian/bionic/x86_64/Percona-Server-5.5.62-38.14-r7e0e1cc-bionic-x86_64-bundle.tar
-#2 https://downloads.percona.com/downloads/Percona-Server-5.5/Percona-Server-5.5.62-38.14/binary/debian/bionic/x86_64/percona-server-server-5.5_5.5.62-rel38.14-1.bionic_amd64.deb
-
-#tar xvf Percona-Server-5.5.62-38.14-r7e0e1cc-bionic-x86_64-bundle.tar
-#dpkg -i *.deb
-
-#apt --fix-broken install
-
-#3
-
 echo "percona-server-server-5.5 percona-server-server/root_password password 321" | sudo debconf-set-selections
 echo "percona-server-server-5.5 percona-server-server/root_password_again password 321" | sudo debconf-set-selections
 dpkg -i *.deb
+#apt --fix-broken install
 apt-get install -f -y
 
-
-
-
-
-#apt install percona-server-server-5.7 -y
 
 #redis
 apt install redis-server -y
