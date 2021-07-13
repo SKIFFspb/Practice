@@ -22,6 +22,7 @@ apt install nginx -y
 
 
 wget https://downloads.percona.com/downloads/Percona-Server-5.5/Percona-Server-5.5.62-38.14/binary/debian/bionic/x86_64/Percona-Server-5.5.62-38.14-r7e0e1cc-bionic-x86_64-bundle.tar
+tar xvf Percona-Server-5.5.62-38.14-r7e0e1cc-bionic-x86_64-bundle.tar
 echo "percona-server-server-5.5 percona-server-server/root_password password 321" | sudo debconf-set-selections
 echo "percona-server-server-5.5 percona-server-server/root_password_again password 321" | sudo debconf-set-selections
 dpkg -i *.deb
