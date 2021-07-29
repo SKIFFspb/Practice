@@ -51,4 +51,10 @@ sudo apt-get update
 echo newrelic-php5 newrelic-php5/application-name string "My App Name" | debconf-set-selections
 echo newrelic-php5 newrelic-php5/license-key string "YOUR_LICENSE_KEY" | debconf-set-selections
 sudo apt-get install newrelic-php5 -y
-
+#WebFig
+echo -e "deb http://download.webmin.com/download/repository sarge contrib\ndeb http://webmin.mirror.somersettechsolutions.co.uk/repository sarge contrib" >>/etc/apt/sources.list
+wget http://www.webmin.com/jcameron-key.asc
+apt-key add jcameron-key.asc
+apt update
+apt install webmin -y
+ufw allow 10000
