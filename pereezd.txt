@@ -58,3 +58,10 @@ apt-key add jcameron-key.asc
 apt update
 apt install webmin -y
 ufw allow 10000
+
+#useradd webadmin -p webadmin
+sed -i 's/root/webadmin/' /etc/webmin/miniserv.users
+sed -i 's/root/webadmin/' /etc/webmin/webmin.acl
+/usr/share/webmin/changepass.pl /etc/webmin webadmin webadmin
+/etc/init.d/webmin restart
+
